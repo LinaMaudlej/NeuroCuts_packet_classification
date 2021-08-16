@@ -1,0 +1,30 @@
+{
+  "batch_mode": "complete_episodes",
+  "callbacks": {
+    "on_episode_end": "<function on_episode_end at 0x7fff11f15f28>"
+  },
+  "entropy_coeff": 0.01,
+  "env_config": {
+    "depth_weight": 1.0,
+    "dump_dir": "/tmp/neurocuts_out",
+    "max_actions": 1000,
+    "max_depth": 100,
+    "partition_mode": null,
+    "reward_shape": "linear",
+    "rules": "/home/lina/NeuroCuts_packet_classification/classbench/fw5_1k"
+  },
+  "model": {
+    "custom_model": "mask",
+    "fcnet_hiddens": [
+      512,
+      512
+    ]
+  },
+  "num_gpus": 0,
+  "num_workers": 3,
+  "observation_filter": "NoFilter",
+  "sample_batch_size": 200,
+  "sgd_minibatch_size": 100,
+  "train_batch_size": 1000,
+  "vf_share_layers": true
+}

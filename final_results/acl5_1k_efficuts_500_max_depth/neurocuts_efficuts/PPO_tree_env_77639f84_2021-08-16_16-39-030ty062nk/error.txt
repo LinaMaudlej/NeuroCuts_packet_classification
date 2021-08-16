@@ -1,0 +1,34 @@
+Failure # 1 (occurred at 2021-08-16_16-39-09)
+Traceback (most recent call last):
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/tune/trial_runner.py", line 424, in _process_trial
+    result = self.trial_executor.fetch_result(trial)
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/tune/ray_trial_executor.py", line 377, in fetch_result
+    result = ray.get(trial_future[0], DEFAULT_GET_TIMEOUT)
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/worker.py", line 1492, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(RuntimeError): [36mray::PPO.__init__()[39m (pid=24614, ip=132.68.52.223)
+  File "python/ray/_raylet.pyx", line 630, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 637, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 638, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 643, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 623, in function_executor
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/agents/trainer_template.py", line 83, in __init__
+    Trainer.__init__(self, config, env, logger_creator)
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/agents/trainer.py", line 397, in __init__
+    Trainable.__init__(self, config, logger_creator)
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/tune/trainable.py", line 172, in __init__
+    self._setup(copy.deepcopy(self.config))
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/agents/trainer.py", line 528, in _setup
+    self._init(self.config, self.env_creator)
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/agents/trainer_template.py", line 102, in _init
+    self.config["num_workers"])
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/agents/trainer.py", line 573, in _make_workers
+    logdir=self.logdir)
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/evaluation/worker_set.py", line 60, in __init__
+    RolloutWorker, env_creator, policy, 0, self._local_config)
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/evaluation/worker_set.py", line 216, in _make_worker
+    _fake_sampler=config.get("_fake_sampler", False))
+  File "/home/lina/.local/lib/python3.6/site-packages/ray/rllib/evaluation/rollout_worker.py", line 352, in __init__
+    "GPUs were assigned to this worker by Ray, but "
+RuntimeError: GPUs were assigned to this worker by Ray, but TensorFlow reports GPU acceleration is disabled. This could be due to a bad CUDA or TF installation.
+

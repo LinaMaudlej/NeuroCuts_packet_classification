@@ -13,11 +13,10 @@ from hicuts import HiCuts
 
 NUM_DIMENSIONS = 5
 NUM_PART_LEVELS = 6  # 2%, 4%, 8%, 16%, 32%, 64%
-
+rule_mem = 0 
 
 class NeuroCutsEnv(MultiAgentEnv):
     """NeuroCuts multi-agent tree building environment.
-
     In this env, each "cut" in the tree is an action taken by a
     different agent. All the agents share the same policy. We
     aggregate rewards at the end of the episode and assign each
@@ -197,6 +196,8 @@ class NeuroCutsEnv(MultiAgentEnv):
             for n in nodes_remaining:
                 for r in n.rules:
                     rules_remaining.add(str(r))
+            rule_mem = result["bytes_per_rule"] * (933-len(nodes_remaining))
+            #check if already calculated rules set in the cache if yes don't touch the depth_weight.
             info[self.tree.root.id].update({
                 "bytes_per_rule": result["bytes_per_rule"],
                 "memory_access": result["memory_access"],
@@ -254,7 +255,6 @@ class NeuroCutsEnv(MultiAgentEnv):
 
     def compute_gae(self, depth_weight):
         """Compute GAE for a branching decision environment.
-
            V(d) = min over nodes n at depth=d V(n)
         """
 
@@ -369,6 +369,15 @@ class NeuroCutsEnv(MultiAgentEnv):
     def compute_rewards(self, depth_weight):
         depth_to_go = collections.defaultdict(int)
         nodes_to_go = collections.defaultdict(int)
+        if rule_mem > 32768:
+ #this is 32K L1
+            depth_weight = 0.3
+        if rule_mem > 262144:
+ #this is 256K L2
+            depth_weight = 0.2
+        if rule_mem > 15728640: 
+#this is 15360K L3
+            depth_weight = 0
         num_updates = 1
         while num_updates > 0:
             num_updates = 0

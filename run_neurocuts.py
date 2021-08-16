@@ -174,7 +174,7 @@ if __name__ == "__main__":
                     "partition_mode": args.partition_mode,
                     "reward_shape": args.reward_shape,
                     "max_depth": 100 if args.fast else 500,
-                    "max_actions": 1000 if args.fast else 15000,
+		    "max_actions": 1000 if args.fast else 15000,
                     "depth_weight": args.depth_weight,
                     "rules": grid_search(args.rules),
                 },
